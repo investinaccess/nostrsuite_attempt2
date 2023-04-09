@@ -1,7 +1,7 @@
 
 "NOSTRSUITE" - ONGOING EXPLORATION
 
-This is an exploatory effort toward a distributed version control system that utilizes a MerkleDAG-based data structure to track changes to code and files, and leverages the Storj network as a decentralized file storage system for collaboration.
+This is an exploatory effort toward the creation of a distributed version control system that utilizes a MerkleDAG-based data structure to track changes to code + files, and leverages the Storj network as a decentralized file storage system for collaboration.
 
 The MerkleDAG-based data structure ensures that all changes are tracked in a cryptographically verifiable manner, while Storj provides a highly secure and resilient storage layer for files.
 

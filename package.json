@@ -1,0 +1,22 @@
+{
+  "name": "merkle-dag-version-control",
+  "version": "1.0.0",
+  "description": "A MerkleDAG-Based Version Control System that uses Storj for decentralized file storage",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "merkle-dag",
+    "version control",
+    "decentralized",
+    "Storj"
+  ],
+  "author": "Your Name Here",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "jquery": "^3.6.0",
+    "libstorj": "^2.0.0"
+  }
+}

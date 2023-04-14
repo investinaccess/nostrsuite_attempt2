@@ -1,33 +1,40 @@
-const { getMerkleDAG, addNodeToMerkleDAG } = require('./versionControl');
-const { uploadFile } = require('./storage');
+const Repository = require('./repository');
+const Storage = require('./storage');
+const VersionControl = require('./versionControl');
+const NostrConnector = require('./nostr-connector');
 
-async function createNewCommit(parentCID, changes) {
-  const newCommit = {
-    parent: parentCID,
-    changes: changes
+const bucketName = 'your-bucket-name';
+const accessGrant = 'your-access-grant-here';
+
+const repository = new Repository(bucketName);
+const storage = new Storage(accessGrant);
+const versionControl = new VersionControl();
+const nostrConnector = new NostrConnector();
+
+async function push(branchName, filePath, commitMessage, author) {
+  // Upload file to Storj
+  const objectKey = await storage.upload(bucketName, filePath);
+  console.log(`File uploaded to Storj with Object Key: ${objectKey}`);
+
+  // Create MerkleDAG node for the file
+  const { node, cid } = await versionControl.createMerkleDAGNode({ objectKey, commitMessage, author });
+  console.log(`MerkleDAG Node created with CID: ${cid}`);
+
+  // Link node to branch
+  await versionControl.linkNodes(branchName, cid);
+
+  // Publish event on Nostr network
+  const event = {
+    type: 'push',
+    repository: 'your-repo-name',
+    branch: branchName,
+    author,
+    commitMessage,
+    timestamp: Date.now(),
   };
+  await nostrConnector.publish(event);
 
-  const newCommitCID = await addNodeToMerkleDAG(newCommit);
-  console.log(`Created new commit with CID: ${newCommitCID}`);
-  return newCommitCID;
+  console.log('Push successful');
 }
 
-async function pushChanges(branchName, changes) {
-  const branchCID = await getBranchCID(branchName); // You need to implement getBranchCID to fetch the CID of the latest commit of the given branch
-
-  const newCommitCID = await createNewCommit(branchCID, changes);
-
-  // Upload the new commit to Storj
-  const commitFileName = `${newCommitCID}.json`;
-  const commitFileContent = JSON.stringify(await getMerkleDAG(newCommitCID));
-  await uploadFile(commitFileName, commitFileContent);
-
-  // Update the branch reference to point to the new commit
-  await updateBranchCID(branchName, newCommitCID); // You need to implement updateBranchCID to update the branch CID
-
-  console.log(`Changes pushed to branch ${branchName}. New branch CID: ${newCommitCID}`);
-}
-
-module.exports = {
-  pushChanges
-};
+module.exports = push;

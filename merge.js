@@ -1,36 +1,32 @@
-const { getMerkleDAG, addNodeToMerkleDAG } = require('./versionControl');
+const { prompt } = require('enquirer');
+const { Storage } = require('./storage');
+const { Repository } = require('./repository');
+const { VersionControl } = require('./versionControl');
+const { NostrConnector } = require('./nostr-connector');
 
-async function findCommonAncestor(dag1CID, dag2CID) {
-  const dag1 = await getMerkleDAG(dag1CID);
-  const dag2 = await getMerkleDAG(dag2CID);
+const bucketName = 'your-bucket-name';
+const accessGrant = 'your-access-grant-here';
 
-  if (dag1CID === dag2CID) {
-    return dag1CID;
+const storage = new Storage(accessGrant);
+const repository = new Repository(bucketName, storage);
+const versionControl = new VersionControl(repository);
+
+const nostrConnector = new NostrConnector();
+
+async function merge() {
+  const branches = await repository.listBranches();
+  const selectedBranch = await promptBranch(branches);
+
+  const localNode = await repository.getLocalBranchNode(selectedBranch);
+  const remoteNode = await repository.getRemoteBranchNode(selectedBranch);
+
+  const changes = await versionControl.getChanges(localNode, remoteNode);
+
+  if (changes.length === 0) {
+    console.log(`No changes to merge from the remote branch ${selectedBranch}.`);
+    return;
   }
 
-  if (dag1.height < dag2.height) {
-    return findCommonAncestor(dag1.parent, dag2CID);
-  } else {
-    return findCommonAncestor(dag1CID, dag2.parent);
-  }
-}
-
-async function mergeBranches(baseBranchCID, featureBranchCID) {
-  const commonAncestorCID = await findCommonAncestor(baseBranchCID, featureBranchCID);
-
-  // In this simple example, we assume there are no conflicts when merging branches.
-
-  const newCommit = {
-    parent: baseBranchCID,
-    changes: featureBranchCID
-  };
-
-  const newCommitCID = await addNodeToMerkleDAG(newCommit);
-  console.log(`Merged feature branch CID ${featureBranchCID} into base branch CID ${baseBranchCID}. New commit CID: ${newCommitCID}`);
-
-  return newCommitCID;
-}
-
-module.exports = {
-  mergeBranches
-};
+  console.log(`Merging changes from the remote branch ${selectedBranch}...`);
+  for (let i = 0; i < changes.length; i++) {
+    const change = changes[i

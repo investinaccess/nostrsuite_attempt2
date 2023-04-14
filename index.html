@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOSTRSUITE PERMISSIONLESS ALTERNATIVE</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header>
+      <h1>NOSTRSUITE PERMISSIONLESS ALTERNATIVE</h1>
+    </header>
+    <main>
+      <section>
+        <h2>ADD REPOSITORY</h2>
+        <form id="addRepoForm">
+          <label for="repoName">Repository Name:</label>
+          <input type="text" id="repoName" name="repoName" required>
+          <br>
+          <label for="repoDescription">Repository Description:</label>
+          <textarea id="repoDescription" name="repoDescription" rows="4" cols="50"></textarea>
+          <br>
+          <button type="submit" id="addRepoButton">Add Repository</button>
+        </form>
+      </section>
+      <section>
+        <h2>SEARCH REPOSITORIES</h2>
+        <form id="searchReposForm">
+          <label for="searchTerm">Search Term:</label>
+          <input type="text" id="searchTerm" name="searchTerm" required>
+          <br>
+          <button type="submit" id="searchReposButton">Search Repositories</button>
+        </form>
+        <ul id="searchResults"></ul>
+      </section>
+    </main>
+    <footer>
+      <p>&copy; NOSTRSUITE PERMISSIONLESS ALTERNATIVE, 2023</p>
+    </footer>
+    <script src="storjInteraction.js"></script>
+    <script src="searchRepos.js"></script>
+    <script src="addRepo.js"></script>
+  </body>
+</html>
+

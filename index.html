@@ -1,45 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOSTRSUITE PERMISSIONLESS ALTERNATIVE</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Repository Dashboard</title>
+    <style>
+      body {
+        background-color: black;
+        color: white;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      header {
+        background-color: white;
+        color: black;
+        padding: 1rem 0;
+        text-align: center;
+      }
+
+      h1 {
+        margin: 0;
+      }
+
+      main {
+        padding: 2rem;
+      }
+
+      .button {
+        background-color: white;
+        color: black;
+        border: none;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-right: 1rem;
+      }
+
+      .button:hover {
+        background-color: #333;
+      }
+
+      .repo {
+        margin-bottom: 2rem;
+        padding: 2rem;
+        border: 1px solid white;
+      }
+
+      .repo h2 {
+        margin-bottom: 1rem;
+      }
+
+      .repo p {
+        margin: 0;
+      }
+
+      .repo ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .repo ul li {
+        margin-bottom: 0.5rem;
+      }
+    </style>
   </head>
   <body>
     <header>
-      <h1>NOSTRSUITE PERMISSIONLESS ALTERNATIVE</h1>
+      <h1>Repository Dashboard</h1>
     </header>
     <main>
-      <section>
-        <h2>ADD REPOSITORY</h2>
-        <form id="addRepoForm">
-          <label for="repoName">Repository Name:</label>
-          <input type="text" id="repoName" name="repoName" required>
-          <br>
-          <label for="repoDescription">Repository Description:</label>
-          <textarea id="repoDescription" name="repoDescription" rows="4" cols="50"></textarea>
-          <br>
-          <button type="submit" id="addRepoButton">Add Repository</button>
-        </form>
-      </section>
-      <section>
-        <h2>SEARCH REPOSITORIES</h2>
-        <form id="searchReposForm">
-          <label for="searchTerm">Search Term:</label>
-          <input type="text" id="searchTerm" name="searchTerm" required>
-          <br>
-          <button type="submit" id="searchReposButton">Search Repositories</button>
-        </form>
-        <ul id="searchResults"></ul>
-      </section>
+      <div class="repo">
+        <h2>My First Repo</h2>
+        <p>Description: This is my first repository</p>
+        <ul>
+          <li>Branches:
+            <ul>
+              <li>master</li>
+              <li>dev</li>
+            </ul>
+          </li>
+          <li>Collaborators:
+            <ul>
+              <li>jane_doe</li>
+              <li>john_smith</li>
+            </ul>
+          </li>
+        </ul>
+        <a href="#" class="button">View Repository</a>
+        <a href="#" class="button">Manage Collaborators</a>
+      </div>
+      <div class="repo">
+        <h2>My Second Repo</h2>
+        <p>Description: This is my second repository</p>
+        <ul>
+          <li>Branches:
+            <ul>
+              <li>master</li>
+              <li>dev</li>
+              <li>feature-a</li>
+            </ul>
+          </li>
+          <li>Collaborators:
+            <ul>
+              <li>jane_doe</li>
+            </ul>
+          </li>
+        </ul>
+        <a href="#" class="button">View Repository</a>
+        <a href="#" class="button">Manage Collaborators</a>
+      </div>
     </main>
-    <footer>
-      <p>&copy; NOSTRSUITE PERMISSIONLESS ALTERNATIVE, 2023</p>
-    </footer>
-    <script src="storjInteraction.js"></script>
-    <script src="searchRepos.js"></script>
-    <script src="addRepo.js"></script>
   </body>
 </html>
-
